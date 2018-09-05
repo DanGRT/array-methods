@@ -1,4 +1,6 @@
 function removeMiddle( words ){
+  return words.splice(Math.ceil(words.length)/2,1);
+
   // words is an array which contains an odd number of strings
   // return a new array containing only the middle word
   // the words array should no longer contain the middle word
@@ -7,6 +9,7 @@ function removeMiddle( words ){
 }
 
 function get2ndAnd3rd( myArray ){
+  return myArray.slice(1,3)
   // myArray is an array of numbers
   // return an array containing the 2nd and 3rd items from myArray
   // myArray should remain unchanged
@@ -15,18 +18,21 @@ function get2ndAnd3rd( myArray ){
 }
 
 function stringify( myArray ){
+  return myArray.map(item=> `${item}`)
   // myArray is an array of numbers
   // return a new array which has all items converted to strings
   // myArray should remain unchanged
 }
 
 function types(input){
+  return input.map(item => item === null ? "null" : typeof item)
   // input is an array of items of all types
   // return an array which contains the
   // type of each of the items in input array
 }
 
 function wordLengths( words ){
+  return words.map(item => item.length);
   // words is an array of strings
   // return a new array that contains the number of letters in each word
   // for example
@@ -37,6 +43,7 @@ function wordLengths( words ){
 }
 
 function cities( capitals, formatter ){
+  return capitals.map(formatter)
   // capitals is an array of objects that have a city and country property
   // for example
   // {
@@ -51,47 +58,59 @@ function cities( capitals, formatter ){
 }
 
 function largerThanTen( numbers ){
+  return numbers.filter(item => item>10);
   // numbers is an array of numbers
   // return a new array that contains only numbers
   // from the input array which are greater than 10
 }
 
 function even( numbers ){
+  return numbers.filter(item => item % 2 === 0)
   // numbers is an array of numbers
   // return a new array that contains only even numbers from the input array
 }
 
 function findTheNeedle( words ){
+  return words.findIndex(item => item==="needle");
   // words is an array of words
   // return the index of the word 'needle'
 }
 
 function findLargest( numbers ){
+  return Math.max(...numbers)
   // numbers is an array of numbers
   // return the largest number from that array
 }
 
 function addAllnumbers( numbers ) {
+  return numbers.reduce((acc,item)=>{
+    return acc+item;
+  })
   // numbers is an array of numbers
   // return the sum of all the numbers in the array
 }
 
 function sortingStrings(strings){
+  return strings.sort()
   // strings is an array of strings
   // sort them in alphabetical order and return the sorted array
 }
 
 function sortingNumbers(numbers){
+  return numbers.sort(function(a,b){return a-b;})
   // numbers is an array of numbers
   // sort them in ascending order and return the sorted array
 }
 
 function sortingNumbersDescending(numbers){
+  return numbers.sort((a,b)=> b-a)
   // numbers is an array of numbers
   // sort them in descending order and return the sorted array
 }
 
 function sortingCars(cars){
+
+  return cars.sort((a,b)=> a.year-b.year);
   // a car object has a make, model, year. For example
   // const car = {
   //   make: 'Ford',
@@ -104,6 +123,9 @@ function sortingCars(cars){
 }
 
 function deleteColour( car ){
+  delete car.colour
+  return car
+
   // car is an object with properties make, model and colour. For example
   // {
   //   make: 'Ford',
@@ -115,6 +137,19 @@ function deleteColour( car ){
 };
 
 function paintShop( cars, colour ){
+  carsCopy = cars.map(item => Object.assign({},item));
+  return carsCopy.map(item =>{
+    if (item.make==="Ford"){
+      item.colour=colour;
+      return item;
+    } else {
+      return item;
+    }
+
+  })
+
+
+  }
   // cars is an array of objects that have
   // their properties are `make`, `model` and `colour`
 
@@ -130,9 +165,12 @@ function paintShop( cars, colour ){
 
   // the original array passed in should not change
   // hint: look up 'Cloning objects in JavaScript'
-}
+
 
 function secondLargest( numbers ){
+  const newArray = numbers.slice().sort((a,b)=> b-a)
+  return numbers.findIndex(item => item === newArray[1])
+
   // numbers is an array of numbers
   // return the index of the second
   // largest number in the array
@@ -150,6 +188,12 @@ function addSales( city, sales ){
     berlin: 150,
     madrid: 400
   };
+  if (globalSales.hasOwnProperty(city)===true) {
+    globalSales[city]+=sales;
+  } else{
+    globalSales[city]=sales;
+  }
+  return globalSales;
 
   // If city already exists in object, add sales figure
   // to its total. If city does not exist, create a new
@@ -159,6 +203,9 @@ function addSales( city, sales ){
 }
 
 function totalSales( sales ){
+// redo in the morning///ask James to show us github
+  return Object.keys(sales).map(i => sales[i])
+  .reduce((acc, item) => acc + item)
   // You are passed a sales object similar to the one
   // in the previous exercise. Add up all the sales figures
   // and return the total.

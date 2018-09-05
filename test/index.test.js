@@ -296,7 +296,7 @@ test('Add sales', () => {
   expect( barcelonaOutput ).toEqual( barcelonax );
 });
 
-test('Total sales', () => {
+test.only('Total sales', () => {
   const output = totalSales({
     london: 200,
     paris: 100,
