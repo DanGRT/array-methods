@@ -296,7 +296,7 @@ test('Add sales', () => {
   expect( barcelonaOutput ).toEqual( barcelonax );
 });
 
-test.only('Total sales', () => {
+test('Total sales', () => {
   const output = totalSales({
     london: 200,
     paris: 100,
@@ -400,3 +400,48 @@ test('Crazy money', () => {
 
   expect( output ).toEqual( 151 );
 });
+
+function double(item){
+  return item * 2
+}
+
+test('Custom Map', () => {
+  const output = map([1,2,3,4,5],
+    function double(item){
+      return item * 2
+    })
+
+  expect(output).toEqual([2,4,6,8,10])
+})
+
+
+test("Custom filter",() => {
+  const output = filter( [1,"yes",100,true, 0],
+    function numbers(item){
+      if (typeof item ==="number") {
+        return true
+      }
+    })
+  expect(output).toEqual([1,100,0])
+})
+
+
+test("Custom Find", () => {
+  const output = find([1,6,8,"Hello",99,true,"World",33],
+    function isString(item){
+      if (typeof item === "string") {
+        return true
+      }
+    })
+    expect(output).toEqual("Hello")
+})
+
+
+
+test("Custom reduce", () => {
+  const output = reduce([1,3,4],
+    function add(acc,item) {
+    return  acc+item
+  },0)
+  expect(output).toEqual(8);
+})

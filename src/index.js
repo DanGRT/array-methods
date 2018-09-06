@@ -214,6 +214,10 @@ function totalSales( sales ){
 }
 
 function highestSum( input ){
+  return Math.max(...input.map(item => {
+    return item.reduce((acc, element) => element===[]? acc + 0:acc+element,0)
+  }))
+
   // input is an array of arrays of numbers.
   // For example
   // [
@@ -228,6 +232,10 @@ function highestSum( input ){
 }
 
 function walletSum( wallet ){
+  const pairs=Object.entries(wallet);
+  return pairs.map(item => item[0]*item[1])
+              .reduce((acc,ele) => acc+ele)
+
   // A wallet object has keys which are the denominations
   // and values which are the number of those notes in the
   // wallet. See example below.
@@ -244,14 +252,38 @@ function walletSum( wallet ){
   // the denominations used in this exercise are 5, 10 and 20
 }
 
-function walletMerge( wallet1, wallet2 ){
+
+  function walletMerge( wallet1, wallet2 ){
+    let keys = Object.keys(wallet1)
+    let output = [wallet1,wallet2].reduce((acc,item)=>{
+       keys.forEach(key => {
+         acc[key]+= item[key]
+      })
+       return acc
+    })
+    return output
+
+    // return a new wallet object containing the contents of
+    // both wallets passed in.
+
+    // the denominations used in this exercise are 5, 10 and 20
+  }
   // return a new wallet object containing the contents of
   // both wallets passed in.
 
   // the denominations used in this exercise are 5, 10 and 20
-}
+
 
 function arrayOfWallets( wallets ){
+  let keys=Object.keys(wallets[0]);
+  let output = wallets.reduce((acc,item) => {
+    keys.forEach(key => {
+      acc[key] += item[key]
+    })
+    return acc
+
+  })
+  return output;
   // wallets is an array of wallets
 
   // Return a new wallet object containing the notes from all wallets
@@ -259,6 +291,11 @@ function arrayOfWallets( wallets ){
 }
 
 function crazyMoney( wallets ){
+  return wallets.map(item => Object.entries(item))
+                .reduce((acc,item) => acc.concat(item))
+                .map(item => item[0] * item[1])
+                .reduce((acc, item) => acc + item)
+
   // In previous exercises the notes denominations were
   // limited to 5, 10 and 20. We now have wallets that
   // can have notes of any denomination. Implement a function
@@ -275,6 +312,11 @@ function crazyMoney( wallets ){
  */
 
 function map(array, callback){
+  let outputArr=[]
+  for (i=0;i<array.length;i++) {
+    outputArr[i]=callback(array[i])
+  }
+  return outputArr;
   // Implement a map function which accepts an array of items and a callback function
   // It should call the callback with each item from the array
   // and return a new array that contains the output of each callback
@@ -286,6 +328,13 @@ function map(array, callback){
 }
 
 function filter(array, callback){
+  let outputArray =[]
+  for (let i = 0; i<array.length; i++){
+    if (callback(array[i])){
+      outputArray.push(array[i])
+    }
+  }
+  return outputArray
   // Implement a filter function which accepts an array of items and a callback function
   // It should call the callback with each item from the array
   // and return a new array that the items from the array for which the
@@ -298,6 +347,11 @@ function filter(array, callback){
 }
 
 function find(array, callback){
+  for(i=0;i<array.length;i++) {
+    if (callback(array[i])) {
+      return array[i]
+    }
+  }
   // Implement a find function which accepts an array of items and a callback function
   // It should return the first item from the array for which
   // the callback returns a truthy value
@@ -309,6 +363,11 @@ function find(array, callback){
 }
 
 function reduce(array, reducer, initialAcc){
+  let output = initialAcc
+  for (let i = 0; i < array.length; i++){
+    output = reducer(output, array[i])
+  }
+  return output
   // Implement a reduce function which accepts an array of items, a reducer function
   // and an initial value of the acc.
   // It should return the last value that was output by the reducer.
